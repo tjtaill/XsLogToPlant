@@ -28,8 +28,8 @@ public class XsSipToPlant {
 
 
 
-    public static String createMessage(String message, String origin, String destination) {
-        return origin + " -> " + destination + " : " + message + "\n";
+    public static String createMessage(String message, String origin, String destination, int lineNumber) {
+        return origin + " -> " + destination + " : " + "[[" + lineNumber + "]] " + message + "\n";
     }
 
     public static void main(String[] args) throws IOException {
@@ -41,7 +41,9 @@ public class XsSipToPlant {
         Path path = FileSystems.getDefault().getPath(args[0]);
         List<String> lines = Files.readAllLines(path, Charset.defaultCharset());
         Matcher matcher;
+        int lineNumber = 0;
         for( String line : lines ) {
+            ++lineNumber;
             //  direction line
             matcher = DIRECTION_LINE.matcher(line);
             if ( matcher.matches() ) {
@@ -62,14 +64,14 @@ public class XsSipToPlant {
             // sip request line
             matcher = SIP_REQUEST_LINE.matcher(line);
             if ( matcher.matches() ) {
-                messages.add(createMessage(matcher.group(1), origin, destination));
+                messages.add(createMessage(matcher.group(1), origin, destination, lineNumber));
                 continue;
             }
 
             // sip response line
             matcher = SIP_RESPONSE_LINE.matcher(line);
             if ( matcher.matches() ) {
-                messages.add(createMessage(matcher.group(1), origin, destination));
+                messages.add(createMessage(matcher.group(1), origin, destination, lineNumber));
                 continue;
             }
 
