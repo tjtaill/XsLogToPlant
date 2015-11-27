@@ -18,7 +18,7 @@ public class XsSipToPlant {
     }
 
     private final static Pattern DIRECTION_LINE =
-            Pattern.compile("\\tudp \\d+ Bytes (IN from|OUT to) (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):\\d{1,5}");
+            Pattern.compile("\\s+udp \\d+ Bytes (IN from|OUT to) (\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}):\\d{1,5}");
     private final static Pattern SIP_RESPONSE_LINE =
             Pattern.compile("SIP/2.0 (\\d{3}).*?");
     private static final String METHOD =
